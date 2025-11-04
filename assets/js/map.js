@@ -1,10 +1,7 @@
 (function () {
   const map = L.map("map", { minZoom: 4, maxZoom: 10 }).setView([-2.5, 118], 5);
-
-  // setelah const map = L.map(...).setView(...)
   window.mapRef = map;
 
-  // optional helper: fokus ke semua marker suatu region (gabung semua layer)
   window.fitByRegion = function (regionName) {
     const items = []
       .concat(window.DATA.figures || [])
@@ -21,7 +18,6 @@
     map.fitBounds(bounds, { padding: [20, 20] });
   };
 
-  // Basemap tanpa label
   L.tileLayer(
     "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png",
     {
@@ -31,7 +27,6 @@
     }
   ).addTo(map);
 
-  // --- Helpers ---
   const imgIcon = (url, size = 64) =>
     L.icon({
       iconUrl: url,
@@ -40,7 +35,11 @@
     });
 
   function popupHTML(item) {
+    // Redirect to time-machine.html with query if Time Travel button clicked
     const url = `content.html?type=${item.type}&id=${item.id}`;
+    const timeTravelUrl = `time-machine.html?yearsAgo=${
+      new Date().getFullYear() - (item.year || 1500)
+    }&target=content.html?type=${item.type}&id=${item.id}`;
     return `
       <div class="popup-card" style="width:220px">
         <img src="${item.image}" alt="${item.title}">
@@ -50,27 +49,45 @@
           <p class="small mb-2">${item.summary || ""}</p>
           <div class="d-grid gap-2">
             <a class="btn btn-sm btn-primary" href="${url}">Lihat Detail</a>
-            <button class="btn btn-sm btn-outline-secondary js-time-travel" data-type="${
-              item.type
-            }" data-id="${item.id}" data-year="${item.year || ""}">
-              Time Travel
-            </button>
+            <a class="btn btn-sm btn-outline-secondary" href="${timeTravelUrl}">Time Machine</a>
           </div>
         </div>
       </div>
     `;
   }
 
-  // --- Layer Groups ---
   const layerFigures = L.layerGroup().addTo(map);
   const layerKingdoms = L.layerGroup().addTo(map);
   const layerArts = L.layerGroup().addTo(map);
 
-  // Render: 2-3 pertama bergambar, sisanya pin/circle sederhana
+  // function renderLayer(dataArr, layer, useCircle = false) {
+  //   dataArr.forEach((item, idx) => {
+  //     let marker;
+  //     if (idx < 3 && item.image) {
+  //       marker = L.marker([item.lat, item.lng], {
+  //         icon: imgIcon(item.image, 64),
+  //         title: item.title,
+  //       });
+  //     } else {
+  //       marker = useCircle
+  //         ? L.circleMarker([item.lat, item.lng], {
+  //             radius: 6,
+  //             color: "#c3a763",
+  //             fillColor: "#efddb0",
+  //             fillOpacity: 0.85,
+  //           })
+  //         : L.marker([item.lat, item.lng], { title: item.title });
+  //     }
+  //     marker.bindPopup(popupHTML(item));
+  //     marker.addTo(layer);
+  //   });
+  // }
+
   function renderLayer(dataArr, layer, useCircle = false) {
-    dataArr.forEach((item, idx) => {
+    dataArr.forEach((item) => {
       let marker;
-      if (idx < 3 && item.image) {
+      // Beri gambar jika property image tersedia
+      if (item.image) {
         marker = L.marker([item.lat, item.lng], {
           icon: imgIcon(item.image, 64),
           title: item.title,
@@ -89,7 +106,6 @@
   renderLayer(window.DATA.kingdoms || [], layerKingdoms, false);
   renderLayer(window.DATA.artifacts || [], layerArts, true);
 
-  // Layer control
   const overlays = {
     "Wali Songo": layerFigures,
     Kingdoms: layerKingdoms,
@@ -97,26 +113,11 @@
   };
   L.control.layers(null, overlays, { collapsed: false }).addTo(map);
 
-  // Fit bounds
   const groupAll = L.featureGroup([layerFigures, layerKingdoms, layerArts]);
   try {
     map.fitBounds(groupAll.getBounds(), { padding: [20, 20] });
   } catch (e) {}
 
-  // Delegasi tombol Time Travel di popup
-  map.on("popupopen", (e) => {
-    const pop = e.popup.getElement();
-    const btn = pop.querySelector(".js-time-travel");
-    if (btn) {
-      btn.addEventListener("click", () => {
-        const type = btn.getAttribute("data-type");
-        const id = btn.getAttribute("data-id");
-        const year = parseInt(btn.getAttribute("data-year") || "1500", 10);
-        openTimeMachine({ type, id, year });
-      });
-    }
-  });
-
-  // Expose untuk dropdown hint (opsional)
+  // Save layer reference for sidebar control
   window.__layers = { layerFigures, layerKingdoms, layerArts };
 })();

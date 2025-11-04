@@ -1,241 +1,192 @@
 <!doctype html>
 <html lang="id">
-<head>
-  <meta charset="utf-8">
-  <title>Peta — Museum Digital</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Bootstrap & Leaflet -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/>
-  <link href="assets/css/styles.css" rel="stylesheet">
-  <style>#map{height:70vh;border-radius:12px;}</style>
-</head>
-<body>
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container">
-    <a class="navbar-brand" href="#">Museum Digital</a>
-    <div class="ms-auto">
-      <a class="btn btn-outline-primary btn-sm me-2" href="enroll.html">Enroll</a>
-      <div class="btn-group ms-2">
-        <button class="btn btn-outline-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown">
-            Pulau
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end" id="islandMenu">
-            <li><a class="dropdown-item" href="#" data-island="sumatra">Sumatra</a></li>
-            <li><a class="dropdown-item" href="#" data-island="jawa">Jawa</a></li>
-            <li><a class="dropdown-item" href="#" data-island="kalimantan">Kalimantan</a></li>
-            <li><a class="dropdown-item" href="#" data-island="sulawesi">Sulawesi</a></li>
-            <li><a class="dropdown-item" href="#" data-island="bali-nt">Bali & Nusa Tenggara</a></li>
-            <li><a class="dropdown-item" href="#" data-island="maluku">Maluku</a></li>
-            <li><a class="dropdown-item" href="#" data-island="papua">Papua</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#" data-region="Sumatra">Fokus data: Sumatra</a></li>
-            <li><a class="dropdown-item" href="#" data-region="Jawa">Fokus data: Jawa</a></li>
-            <li><a class="dropdown-item" href="#" data-region="Kalimantan">Fokus data: Kalimantan</a></li>
-            <li><a class="dropdown-item" href="#" data-region="Sulawesi">Fokus data: Sulawesi</a></li>
-            <li><a class="dropdown-item" href="#" data-region="Maluku">Fokus data: Maluku</a></li>
-            <li><a class="dropdown-item" href="#" data-region="Papua">Fokus data: Papua</a></li>
-        </ul>
-      </div>
-
-      <div class="btn-group">
-        <a class="btn btn-primary btn-sm" href="map.html">Peta</a>
-        <button class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"></button>
-        <ul class="dropdown-menu dropdown-menu-end">
-          <li><a class="dropdown-item" href="#" data-layer="figures">Wali Songo</a></li>
-          <li><a class="dropdown-item" href="#" data-layer="kingdoms">Kingdoms</a></li>
-          <li><a class="dropdown-item" href="#" data-layer="artifacts">Artifacts</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</nav>
-
-<main class="container py-3">
-  <div class="row g-3">
-    <div class="col-lg-8">
-      <div id="map" class="shadow-sm"></div>
-      <div class="mt-2 small text-muted">Gunakan kontrol layer di pojok kanan atas untuk on/off kategori.</div>
-    </div>
-    <div class="col-lg-4">
-      <div class="card shadow-sm mb-3">
-        <div class="card-body">
-          <h2 class="h5">Infografik Wali Songo</h2>
-          <ul class="mb-3">
-            <li>Sebaran pusat dakwah di pesisir Jawa</li>
-            <li>Pendekatan budaya & pendidikan</li>
-            <li>Jejak masjid dan pesantren awal</li>
-          </ul>
-          <a class="btn btn-outline-success btn-sm" href="content.html?type=figure&id=sunankali">Lihat contoh kartu</a>
-        </div>
-      </div>
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <h2 class="h5 mb-1">Time Machine (Quick)</h2>
-          <div id="tmText" class="time-machine mb-3">Set tahun lalu klik Time Travel di popup.</div>
-          <div class="input-group">
-            <span class="input-group-text">Tahun</span>
-            <input type="number" class="form-control" id="tmYear" value="1479" min="1" max="2100">
-            <button class="btn btn-primary" id="tmSet">Set</button>
+  <head>
+    <meta charset="utf-8">
+    <title>Peta — Museum Digital</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap & Leaflet -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+    <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      rel="stylesheet" />
+    <link href="assets/css/styles.css" rel="stylesheet">
+    <style>
+    body {
+      background: #f6edd9;
+    }
+    #map{
+      height:70vh;
+      border-radius:16px;
+      box-shadow: 0 4px 24px #e7c28299;
+      background: #f6edd9;
+    }
+    .card, .sidebar-map {
+      background: #fbf8f1;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px #e5dcc1;
+    }
+    .minimap-wrapper .island-btn {
+      margin: 0 9px 9px 0;
+      background: #ffeec2;
+      border: 1px solid #d1b375;
+      color: #a17421;
+      font-weight: bold;
+      border-radius: 8px;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .minimap-wrapper .island-btn:active, .minimap-wrapper .island-btn.active {
+      background: #eec176;
+      color: #633d17;
+    }
+    .topic-select {
+      background: #faf1e3;
+    }
+    .focused-area {
+      border: 2px solid #a17421;
+      box-shadow: 0 2px 24px #d6b257;
+    }
+    .island-btn svg {
+      vertical-align: middle;
+      margin-right: 4px;
+      margin-bottom: 2px;
+    }
+    .topik-info {
+      background: #faecd8;
+      padding: 1em;
+      border-radius: 9px;
+      font-size: 15px;
+      margin-bottom: 14px;
+      color: #785924;
+    }
+    .leaflet-control-layers {
+      background: #faecd8 !important;
+      border-radius: 7px;
+      padding-top: 8px !important;
+      font-size: 14px;
+    }
+  </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
+      <div class="container">
+        <a class="navbar-brand" href="#">Museum Digital</a>
+        <div class="ms-auto">
+          <a class="btn btn-outline-primary btn-sm me-2"
+            href="enroll.html">Enroll</a>
+          <div class="btn-group ms-2">
+            <a class="btn btn-primary btn-sm" href="timeline.html">Timeline</a>
           </div>
-          <div class="form-text">Versi penuh muncul saat klik tombol <em>Time Travel</em> di popup marker.</div>
         </div>
       </div>
-    </div>
-  </div>
-</main>
-
-<!-- Modal Time Machine -->
-<div class="modal fade" id="timeMachineModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content shadow">
-      <div class="modal-header">
-        <h5 class="modal-title">
-          <span class="me-2">🕰️</span>
-          Time Machine
-        </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-      </div>
-      <div class="modal-body">
-        <div class="tm-illustration mb-3"></div>
-        <p class="mb-2">
-          <strong id="tmTitle">Menuju …</strong><br>
-          <span class="text-muted">Hari ini <span id="tmNow"></span> • Mundur <span id="tmDiff"></span> tahun ke <span id="tmTarget"></span></span>
-        </p>
-        <div class="progress" role="progressbar" aria-label="Countdown">
-          <div id="tmBar" class="progress-bar progress-bar-striped progress-bar-animated" style="width: 0%"></div>
+    </nav>
+    <main class="container py-3">
+      <div class="row g-3">
+        <div class="col-lg-8">
+          <div id="map" class="shadow-sm"></div>
+          <div class="mt-2 small text-muted">Gunakan kontrol layer di pojok
+            kanan atas untuk on/off kategori.</div>
         </div>
-        <div class="small text-muted mt-2" id="tmCountdownText">Mulai dalam 3…</div>
+        <div class="col-lg-4">
+          <div class="card sidebar-map shadow-sm mb-3">
+            <div class="card-body minimap-wrapper">
+              <h2 class="h5 mb-2">Pilih Pulau</h2>
+              <div id="minimap" class="mb-2">
+                <!-- SVG clickable / icon based pulau besar -->
+                <button data-island="sumatra" class="island-btn">
+                  <svg width="30" height="18"><ellipse cx="15" cy="9" rx="14"
+                      ry="7" fill="#dbbe91" /></svg> Sumatra
+                </button>
+                <button data-island="jawa" class="island-btn">
+                  <svg width="32" height="16"><rect x="3" y="5" width="25"
+                      height="7" rx="6" fill="#dbbe91" /></svg> Jawa
+                </button>
+                <button data-island="kalimantan" class="island-btn">
+                  <svg width="26" height="20"><ellipse cx="13" cy="10" rx="11"
+                      ry="8" fill="#dbbe91" /></svg> Kalimantan
+                </button>
+                <button data-island="sulawesi" class="island-btn">
+                  <svg width="22" height="20"><ellipse cx="11" cy="10" rx="10"
+                      ry="6" fill="#dbbe91" /><rect x="5" y="3" width="7"
+                      height="7" rx="3" fill="#d1b375" /></svg> Sulawesi
+                </button>
+                <button data-island="papua" class="island-btn">
+                  <svg width="27" height="15"><ellipse cx="13" cy="8" rx="10"
+                      ry="6" fill="#dbbe91" /></svg> Papua
+                </button>
+              </div>
+              <small>Pilih pulau utama untuk fokus area peta.</small>
+            </div>
+          </div>
+          <div class="card shadow-sm topic-select mb-3">
+            <div class="card-body">
+              <h2 class="h5 mb-2">Topik Museum</h2>
+              <select id="topicSelector" class="form-select mb-2">
+                <option value="figures">Wali Songo</option>
+                <option value="kingdoms">Kerajaan Islam</option>
+                <option value="artifacts">Artefak Islam</option>
+              </select>
+              <div id="topikDesc" class="topik-info">
+                Sebaran pusat dakwah dan jejak Wali Songo di pesisir Jawa.
+              </div>
+              <small>Pilih topik untuk menampilkan informasi terkait saja di
+                map.</small>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="modal-footer">
-        <button id="tmCancel" type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
-        <button id="tmVisit" type="button" class="btn btn-primary d-none">Kunjungi</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="assets/js/data.js"></script>
-<script src="assets/js/app.js"></script>
-<script>
-// Quick time machine text (opsional)
-let currentTM = 1479;
-timeMachine('tmText', currentTM);
-document.getElementById('tmSet').addEventListener('click', ()=>{
-  currentTM = parseInt(document.getElementById('tmYear').value, 10) || 1479;
-  timeMachine('tmText', currentTM);
-});
-
-// Dropdown hint
-document.querySelectorAll('[data-layer]').forEach(a=>{
-  a.addEventListener('click', ()=>{
-    alert('Gunakan kontrol layer di peta (kanan atas) untuk mengaktifkan/mematikan: ' + a.dataset.layer);
+    </main>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/map.js"></script>
+    <script>
+// =========== Sidebar Minimap Navigation ============
+document.querySelectorAll('.island-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const ISLAND_BOUNDS = {
+      sumatra:   [[-6.5,  95.0], [ 6.5, 106.0]],
+      jawa:      [[-8.8, 105.0], [-5.0, 114.8]],
+      kalimantan:[[ -4.8, 108.0], [ 4.8, 119.5]],
+      sulawesi:  [[ -6.5, 119.0], [ 3.5, 125.5]],
+      papua:     [[-10.0, 130.0], [ 1.0, 141.5]]
+    };
+    const key = this.getAttribute('data-island');
+    const b = ISLAND_BOUNDS[key];
+    if (b && window.mapRef) {
+      const bounds = L.latLngBounds(b[0], b[1]);
+      window.mapRef.flyToBounds(bounds, { padding: [24,24], duration: 1.4 });
+    }
+    document.querySelectorAll('.island-btn').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
   });
 });
-
-// ===== Time Machine Modal Logic =====
-const tmModalEl = document.getElementById('timeMachineModal');
-const tmModal = new bootstrap.Modal(tmModalEl);
-const tmTitle = document.getElementById('tmTitle');
-const tmNow = document.getElementById('tmNow');
-const tmDiff = document.getElementById('tmDiff');
-const tmTarget = document.getElementById('tmTarget');
-const tmBar = document.getElementById('tmBar');
-const tmCountdownText = document.getElementById('tmCountdownText');
-const tmVisit = document.getElementById('tmVisit');
-const tmCancel = document.getElementById('tmCancel');
-
-let tmTimer = null;
-let tmState = { type:null, id:null, year:null };
-
-function openTimeMachine({type, id, year}){
-  tmState = { type, id, year };
-  const now = new Date().getFullYear();
-  tmTitle.textContent = `Menuju ${type} — ${id}`;
-  tmNow.textContent = now;
-  tmTarget.textContent = year;
-  tmDiff.textContent = Math.max(0, now - (year || now));
-
-  tmBar.style.width = '0%';
-  tmVisit.classList.add('d-none');
-  tmCountdownText.textContent = 'Mulai dalam 3…';
-
-  tmModal.show();
-
-  // Countdown 3 detik dengan progress
-  let step = 0;
-  const total = 3; // detik
-  clearInterval(tmTimer);
-  tmTimer = setInterval(()=>{
-    step++;
-    const pct = Math.min(100, Math.floor((step/total)*100));
-    tmBar.style.width = pct + '%';
-    const remain = total - step;
-    tmCountdownText.textContent = remain > 0 ? `Menuju laman… ${remain}` : 'Siap!';
-    if (step >= total){
-      clearInterval(tmTimer);
-      tmVisit.classList.remove('d-none');
-      // Auto-redirect setelah 0.6s bila user tidak klik
-      setTimeout(()=>{
-        if (tmModalEl.classList.contains('show')) {
-          goToDetail();
-        }
-      }, 600);
-    }
-  }, 1000);
-}
-
-function goToDetail(){
-  const url = `content.html?type=${tmState.type}&id=${tmState.id}`;
-  window.location.href = url;
-}
-tmVisit.addEventListener('click', goToDetail);
-tmModalEl.addEventListener('hidden.bs.modal', ()=> clearInterval(tmTimer));
-
-// Expose untuk map.js
-window.openTimeMachine = openTimeMachine;
-</script>
-<script>
-// === Preset bounding box per pulau (perkiraan; cukup untuk flyToBounds) ===
-// Format: [ [southWestLat, southWestLng], [northEastLat, northEastLng] ]
-const ISLAND_BOUNDS = {
-  sumatra:   [[-6.5,  95.0], [ 6.5, 106.0]],
-  jawa:      [[-8.8, 105.0], [-5.0, 114.8]],
-  kalimantan:[[ -4.8, 108.0], [ 4.8, 119.5]],
-  sulawesi:  [[ -6.5, 119.0], [ 3.5, 125.5]],
-  'bali-nt': [[-10.8, 114.0], [-7.4, 125.0]], // Bali + NTB + NTT
-  maluku:    [[ -6.8, 125.0], [ 3.2, 135.5]],
-  papua:     [[-10.0, 130.0], [ 1.0, 141.5]]
+// Topik selector: show only selected layer
+const topikDescList = {
+  figures: "Sebaran pusat dakwah dan jejak Wali Songo di pesisir Jawa.",
+  kingdoms: "Kerajaan, Kesultanan, dan penyebaran Islam di Nusantara.",
+  artifacts: "Artefak, peninggalan, dan benda bersejarah era Islam."
 };
-
-// Handler klik dropdown pulau & region
-document.getElementById('islandMenu').addEventListener('click', (e)=>{
-  const a = e.target.closest('a[data-island], a[data-region]');
-  if (!a) return;
-  e.preventDefault();
-
-  // 1) Preset pulau
-  const key = a.getAttribute('data-island');
-  if (key && window.mapRef) {
-    const b = ISLAND_BOUNDS[key];
-    if (b) {
-      const bounds = L.latLngBounds(b[0], b[1]);
-      window.mapRef.flyToBounds(bounds, { padding: [24,24], duration: 1.2 });
-      return;
-    }
-  }
-
-  // 2) Dinamis by region (pakai field DATA.*.region)
-  const region = a.getAttribute('data-region');
-  if (region && window.fitByRegion) {
-    window.fitByRegion(region);
+document.getElementById('topicSelector').addEventListener('change', function() {
+  const val = this.value;
+  document.getElementById('topikDesc').innerText = topikDescList[val] || "";
+  if(window.__layers) {
+    Object.entries(window.__layers).forEach(([k,layer])=>{
+      if(k == ("layer"+val.charAt(0).toUpperCase()+val.slice(1))) {
+        window.mapRef.addLayer(layer);
+      } else {
+        window.mapRef.removeLayer(layer);
+      }
+    });
   }
 });
+// Set default topik based on selector
+window.addEventListener("DOMContentLoaded",()=> {
+  document.getElementById('topicSelector').dispatchEvent(new Event("change"));
+});
 </script>
-<script src="assets/js/map.js"></script>
-
-<script src="assets/js/map.js"></script>
-</body>
+  </body>
 </html>

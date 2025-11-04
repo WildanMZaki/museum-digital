@@ -1,7 +1,7 @@
 /* === markers bergambar === */
 .leaflet-marker-icon.thumb-marker {
   border-radius: 12px;
-  box-shadow: 0 4px 14px rgba(0,0,0,.18);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .18);
   border: 2px solid #fff;
   object-fit: cover;
 }
@@ -14,16 +14,69 @@
   object-fit: cover;
 }
 
-/* time machine ui */
-.time-machine {
-  font-weight: 600;
-  letter-spacing: .2px;
+body {
+  background: #f6edd9;
 }
-.tm-illustration {
-  background: radial-gradient(ellipse at center, rgba(0, 123, 255, .08), transparent 60%),
-              conic-gradient(from 0turn, rgba(13,110,253,.15), transparent 25%, rgba(13,110,253,.15) 50%, transparent 75%, rgba(13,110,253,.15));
+
+.card,
+.sidebar-map,
+.topic-select {
+  background: #fbf8f1 !important;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px #e5dcc1;
+}
+
+.minimap-wrapper .island-btn {
+  margin: 0 9px 9px 0;
+  background: #ffeec2;
+  border: 1px solid #d1b375;
+  color: #a17421;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.minimap-wrapper .island-btn:active,
+.minimap-wrapper .island-btn.active {
+  background: #eec176;
+  color: #633d17;
+}
+
+.topic-select {
+  background: #faf1e3;
+}
+
+.focused-area {
+  border: 2px solid #a17421;
+  box-shadow: 0 2px 24px #d6b257;
+}
+
+.island-btn svg {
+  vertical-align: middle;
+  margin-right: 4px;
+  margin-bottom: 2px;
+}
+
+.topik-info {
+  background: #faecd8;
+  padding: 1em;
+  border-radius: 9px;
+  font-size: 15px;
+  margin-bottom: 14px;
+  color: #785924;
+}
+
+.leaflet-control-layers {
+  background: #faecd8 !important;
+  border-radius: 7px;
+  padding-top: 8px !important;
+  font-size: 14px;
+}
+
+#map {
   border-radius: 16px;
-  height: 120px;
-  animation: tm-spin 6s linear infinite;
+  box-shadow: 0 4px 24px #e1b96e99;
+  background: #f6edd9;
 }
-@keyframes tm-spin { to { filter: hue-rotate(360deg); } }

@@ -1,38 +1,67 @@
 <!doctype html>
 <html lang="id">
-<head>
-  <meta charset="utf-8">
-  <title>Detail — Museum Digital</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/css/styles.css" rel="stylesheet">
-</head>
-<body>
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container">
-    <a class="navbar-brand" href="#">Museum Digital</a>
-    <div class="ms-auto">
-      <a class="btn btn-outline-primary btn-sm me-2" href="map.html">Peta</a>
-      <a class="btn btn-primary btn-sm" href="enroll.html">Enroll</a>
+  <head>
+    <meta charset="utf-8">
+    <title>Detail — Museum Digital</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap & Custom Styles -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+    <link href="assets/css/styles.css" rel="stylesheet">
+    <link href="content.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
+      <div class="container">
+        <a class="navbar-brand" href="map.html">Museum Digital</a>
+        <div class="ms-auto">
+          <a class="btn btn-outline-primary btn-sm me-2"
+            href="map.html">Peta</a>
+          <a class="btn btn-primary btn-sm" href="enroll.html">Enroll</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container py-3">
+      <div id="contentBox" class="row g-3">
+        <!-- Dynamic -->
+      </div>
+    </main>
+
+    <!-- TOUR GUIDE SIDEBAR -->
+    <div id="tourGuide" class="tour-guide d-none">
+      <div class="tour-bubble">
+        <span id="tourText">Halo, selamat datang di Museum Digital! 👋<br>
+          Saya MuseumBot – siap menemani jelajah dan quiz interaktif. </span>
+      </div>
+      <button class="btn btn-sm btn-warning mt-2" id="tourQuizBtn">Quiz
+        Materi</button>
     </div>
-  </div>
-</nav>
 
-<main class="container py-3">
-  <div id="contentBox" class="row g-3">
-    <!-- Dynamic -->
-  </div>
-</main>
-
-<script src="assets/js/data.js"></script>
-<script src="assets/js/app.js"></script>
-<script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script>
+// --------- Logika Enroll strict ---------
 (function(){
-  const type = qs('type');  // figure | site | artifact
-  const id   = qs('id');
+  // Simple localStorage ticket check
+  const store = {
+    get: k => { try { return JSON.parse(localStorage.getItem(k)); }catch(e){return null;} }
+  };
+  const ticket = store.get('ticket');
+  if(!ticket || !ticket.name || !ticket.school){
+    // Jika belum enroll, redirect!
+    window.location.replace('enroll.html?redirect=content');
+    return;
+  }
+})();
 
-  const pool = (window.DATA[type+'s'] || []); // figures/sites/artifacts
+(function(){
+  // --- Render Konten Utama ---
+  const qs = (k)=>new URLSearchParams(location.search).get(k);
+  const type = qs('type');  // figure | kingdom | artifact
+  const id   = qs('id');
+  const pool = (window.DATA[type+'s'] || []);
   const item = pool.find(x => x.id === id);
 
   const box = document.getElementById('contentBox');
@@ -40,61 +69,81 @@
     box.innerHTML = `<div class="col-12"><div class="alert alert-warning">Konten tidak ditemukan.</div></div>`;
     return;
   }
-
   document.title = `${item.title} — Museum Digital`;
 
   box.innerHTML = `
     <div class="col-lg-8">
-      <div class="card shadow-sm">
-        <img src="${item.image}" class="card-img-top" alt="${item.title}">
+      <div class="museum-card card shadow-sm">
+        <div class="museum-image-frame">
+          <img src="${item.image}" class="museum-img card-img-top" alt="${item.title}">
+          <div class="museum-img-overlay">${item.year || ''} • ${item.region || ''}</div>
+        </div>
         <div class="card-body">
-          <h1 class="h4">${item.title} <span class="text-muted">~ ${item.year || ''}</span></h1>
-          <p class="mb-2">${item.summary || ''}</p>
-          <ul class="card-fact">
-            ${(item.facts || []).map(f=>`<li>• ${f}</li>`).join('')}
+          <h1 class="museum-content-title h3 mb-2">${item.title}</h1>
+          <p class="museum-content-summary mb-2">${item.summary || ''}</p>
+          <ul class="museum-facts">
+            ${(item.facts || []).map(f=>`<li>${f}</li>`).join('')}
           </ul>
-          <div class="d-flex gap-2 mt-3">
+          <div class="museum-actions mt-4 d-flex gap-2">
             <button class="btn btn-success btn-sm" onclick="shareWA('${item.title.replace(/'/g,'’')}')">Bagikan</button>
             <a class="btn btn-outline-primary btn-sm" href="map.html">Kembali ke Peta</a>
           </div>
         </div>
       </div>
-      <div class="alert alert-info mt-3">
-        <div class="d-flex align-items-center justify-content-between">
-          <div>
-            <strong>Time Machine: </strong>
-            <span id="tmText" class="time-machine"></span>
-          </div>
-          <div class="ms-3">
-            <input type="number" id="tmYear" class="form-control form-control-sm d-inline-block" style="width:110px" value="${item.year || 1500}">
-            <button class="btn btn-sm btn-primary" id="tmSet">Set</button>
-          </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card museum-card shadow-sm mb-3">
+        <div class="card-body">
+          <h2 class="h5 mb-2">Akan Datang</h2>
+          <ul class="small mb-0">
+            <li>Quiz singkat 5–7 soal per materi</li>
+            <li>Audio penjelasan <span class="badge bg-info">New</span></li>
+            <li>Poin & badge quest</li>
+            <li>Referensi & sumber belajar</li>
+          </ul>
         </div>
       </div>
-    </div>
-
-    <div class="col-lg-4">
-      <div class="card shadow-sm">
+      <div id="questPanel" class="museum-card card shadow-sm mb-3">
         <div class="card-body">
-          <h2 class="h6">Akan Datang</h2>
-          <ul class="small mb-0">
-            <li>Quiz singkat 5–7 soal</li>
-            <li>Audio penjelasan 60–90 detik</li>
-            <li>Rujukan sumber</li>
-          </ul>
+          <div><b>Quest kamu:</b></div>
+          <div class="small mb-2">Eksplor materi & kerjakan quiz untuk mengumpulkan badge!</div>
+          <!-- Dummy quest progress-->
+          <div class="progress museum-progress mb-2" style="height:15px;">
+            <div class="progress-bar bg-warning" style="width:27%" id="questProgress">3/11 materi</div>
+          </div>
+          <div class="museum-badge-block small">
+            Badges: <span class="museum-badge museum-badge-aktif">Wali Songo</span>
+            <span class="museum-badge">Kerajaan</span>
+            <span class="museum-badge">Artefak</span>
+          </div>
         </div>
       </div>
     </div>
   `;
 
-  // Time machine
-  let currentTM = item.year || 1500;
-  timeMachine('tmText', currentTM);
-  document.getElementById('tmSet').addEventListener('click', ()=>{
-    currentTM = parseInt(document.getElementById('tmYear').value, 10) || currentTM;
-    timeMachine('tmText', currentTM);
+  // Tour guide sidebar (kanan bawah)
+  setTimeout(()=>{
+    document.getElementById('tourGuide').classList.remove('d-none');
+    // Sapaan random / info quest
+    document.getElementById('tourText').textContent = [
+      "Halo, selamat menjelajah! Kapan pun siap quiz, klik saja Quiz Materi. 🎉",
+      "Sudah jelajahi 3 materi. Mau lanjut quiz untuk badge berikutnya?",
+      "Cek info materi, challenge quest akan muncul setelah quiz selesai!",
+      "Siap belajar? Klik Quiz Materi di bawah, saya bantu kok 😉",
+    ][Math.floor(Math.random()*4)];
+  },600);
+
+  document.getElementById('tourQuizBtn').addEventListener('click', function(){
+    alert("Quiz akan datang di versi selanjutnya! 😊");
+    // nanti launch quiz panel/material quiz di sini
   });
+
 })();
+function shareWA(txt){
+  const url = window.location.href;
+  const msg = encodeURIComponent(`Lihat materi "${txt}" di Museum Digital:\n${url}`);
+  window.open(`https://wa.me/?text=${msg}`,'_blank');
+}
 </script>
-</body>
+  </body>
 </html>
