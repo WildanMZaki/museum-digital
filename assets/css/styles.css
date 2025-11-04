@@ -1,0 +1,29 @@
+/* === markers bergambar === */
+.leaflet-marker-icon.thumb-marker {
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.18);
+  border: 2px solid #fff;
+  object-fit: cover;
+}
+
+/* popup ringkas */
+.popup-card img {
+  border-radius: 8px;
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+
+/* time machine ui */
+.time-machine {
+  font-weight: 600;
+  letter-spacing: .2px;
+}
+.tm-illustration {
+  background: radial-gradient(ellipse at center, rgba(0, 123, 255, .08), transparent 60%),
+              conic-gradient(from 0turn, rgba(13,110,253,.15), transparent 25%, rgba(13,110,253,.15) 50%, transparent 75%, rgba(13,110,253,.15));
+  border-radius: 16px;
+  height: 120px;
+  animation: tm-spin 6s linear infinite;
+}
+@keyframes tm-spin { to { filter: hue-rotate(360deg); } }

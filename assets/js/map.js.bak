@@ -1,0 +1,66 @@
+(function () {
+  const map = L.map("map", { minZoom: 4, maxZoom: 10 }).setView([-2.5, 118], 5);
+
+  // Basemap tanpa label (Carto light_nolabels)
+  L.tileLayer(
+    "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png",
+    {
+      attribution: "&copy; OpenStreetMap & CARTO",
+      subdomains: "abcd",
+      maxZoom: 19,
+    }
+  ).addTo(map);
+
+  // ----- Layer Groups -----
+  const layerFigures = L.layerGroup().addTo(map);
+  const layerSites = L.layerGroup().addTo(map);
+  const layerArts = L.layerGroup().addTo(map);
+
+  // Helper buat marker popup
+  function bindPopupFromItem(item) {
+    const url = `content.html?type=${item.type}&id=${item.id}`;
+    return `
+      <div class="small">
+        <strong>${item.title}</strong><br/>
+        <span class="text-muted">~ ${item.year || "—"}</span>
+        <p class="mb-2">${item.summary || ""}</p>
+        <a class="btn btn-sm btn-primary" href="${url}">Buka Detail</a>
+      </div>
+    `;
+  }
+
+  // Render Figures (Wali Songo)
+  (window.DATA.figures || []).forEach((f) => {
+    L.marker([f.lat, f.lng])
+      .bindPopup(bindPopupFromItem(f))
+      .addTo(layerFigures);
+  });
+
+  // Render Sites
+  (window.DATA.sites || []).forEach((s) => {
+    L.circleMarker([s.lat, s.lng], { radius: 6 })
+      .bindPopup(bindPopupFromItem(s))
+      .addTo(layerSites);
+  });
+
+  // Render Artifacts
+  (window.DATA.artifacts || []).forEach((a) => {
+    L.marker([a.lat, a.lng], { title: a.title })
+      .bindPopup(bindPopupFromItem(a))
+      .addTo(layerArts);
+  });
+
+  // Layer control (dropdown gaya Bootstrap tetap pakai ini untuk on/off)
+  const overlays = {
+    "Wali Songo": layerFigures,
+    Sites: layerSites,
+    Artifacts: layerArts,
+  };
+  L.control.layers(null, overlays, { collapsed: false }).addTo(map);
+
+  // Fit bounds ke semua layer
+  const groupAll = L.featureGroup([layerFigures, layerSites, layerArts]);
+  try {
+    map.fitBounds(groupAll.getBounds(), { padding: [20, 20] });
+  } catch (e) {}
+})();
