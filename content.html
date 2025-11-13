@@ -1,3 +1,4 @@
+<!-- /content.html -->
 <!doctype html>
 <html lang="id">
   <head>
@@ -10,6 +11,8 @@
       rel="stylesheet">
     <link href="assets/css/styles.css" rel="stylesheet">
     <link href="assets/css/content.css" rel="stylesheet">
+    <!-- NEW: TourGuide Toast styles -->
+    <link href="assets/css/tour-guide.css" rel="stylesheet">
   </head>
   <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
@@ -39,8 +42,7 @@
               <ul id="factsList" class="museum-facts"></ul>
 
               <div class="museum-actions mt-4 d-flex gap-2">
-                <!-- <button class="btn btn-success btn-sm"
-                  id="shareBtn">Bagikan</button> -->
+                <!-- <button class="btn btn-success btn-sm" id="shareBtn">Bagikan</button> -->
                 <a class="btn btn-outline-primary btn-sm"
                   href="map.html">Kembali ke Peta</a>
               </div>
@@ -65,12 +67,11 @@
                 id="sidebarQuizBtn">Quiz Materi</button>
             </div>
           </div>
-
         </div>
       </div>
     </main>
 
-    <!-- TOUR GUIDE (fixed, responsive) -->
+    <!-- TOUR GUIDE (fixed, responsive) — DIBIARKAN SAJA DI HTML; LOGIC-NYA DIHILANGKAN -->
     <div id="tourGuide" class="tour-guide d-none">
       <div class="tour-box card shadow">
         <div
@@ -87,6 +88,10 @@
     <script src="assets/js/data.js"></script>
     <script src="assets/js/quiz.js"></script>
     <script src="assets/js/app.js"></script>
+
+    <!-- NEW: TourGuide Toast logic (reusable) -->
+    <script src="assets/js/tour-guide.js"></script>
+
     <script src="assets/js/content-page.js"></script>
   </body>
 </html>

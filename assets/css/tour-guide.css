@@ -1,0 +1,82 @@
+/* ===========================
+   /assets/css/tour-guide.css
+   =========================== */
+#tourToastWrap {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 1080;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    max-width: min(92vw, 360px)
+}
+
+.tg-toast {
+    border: 0;
+    border-radius: .75rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+    background: #fff;
+    overflow: hidden
+}
+
+.tg-toast.show {
+    opacity: 1
+}
+
+.tg-toast .toast-body {
+    padding: .75rem .75rem
+}
+
+.tg-row {
+    display: flex;
+    align-items: flex-start;
+    gap: .75rem
+}
+
+.tg-main {
+    flex: 1 1 auto;
+    min-width: 0;
+    white-space: normal;
+    font-size: .95rem;
+    line-height: 1.35
+}
+
+.tg-actions .btn {
+    margin-top: .25rem
+}
+
+.tg-avatar {
+    flex: 0 0 auto;
+    width: 64px;
+    max-height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none
+}
+
+.tg-avatar img {
+    width: 100%;
+    height: auto;
+    object-fit: contain
+}
+
+.tg-quiz .tg-main {
+    font-size: .95rem
+}
+
+.tg-quiz .btn {
+    width: 100%;
+    text-align: left;
+    margin-bottom: .375rem
+}
+
+@media (max-width:420px) {
+    #tourToastWrap {
+        right: .5rem;
+        left: .5rem;
+        max-width: none
+    }
+}
