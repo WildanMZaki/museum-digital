@@ -1,0 +1,86 @@
+<!-- /content.html -->
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8">
+    <title>Detail — Museum Digital</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap & Custom Styles -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+    <link href="assets/css/styles.css" rel="stylesheet">
+    <link href="content.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
+      <div class="container">
+        <a class="navbar-brand" href="map.html">Museum Digital</a>
+        <div class="ms-auto">
+          <a class="btn btn-outline-primary btn-sm me-2"
+            href="map.html">Peta</a>
+          <a class="btn btn-primary btn-sm" href="enroll.html">Enroll</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container py-3">
+      <div class="row g-3">
+        <!-- LEFT: MAIN CONTENT -->
+        <div class="col-lg-8">
+          <div class="museum-card card shadow-sm">
+            <div class="museum-image-frame mx-auto" id="imageFrame"
+              aria-live="polite">
+              <img id="itemImage" class="museum-img card-img-top" alt
+                loading="lazy" decoding="async" width="960" height="640">
+              <div class="museum-img-overlay" id="itemMeta"></div>
+            </div>
+            <div class="card-body">
+              <h1 id="itemTitle" class="museum-content-title h3 mb-2">—</h1>
+              <p id="itemSummary" class="museum-content-summary mb-2">—</p>
+
+              <ul id="factsList" class="museum-facts"></ul>
+
+              <div class="museum-actions mt-4 d-flex gap-2">
+                <button class="btn btn-success btn-sm"
+                  id="shareBtn">Bagikan</button>
+                <a class="btn btn-outline-primary btn-sm"
+                  href="map.html">Kembali ke Peta</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: SIDEBAR -->
+        <div class="col-lg-4">
+          <div id="questPanel" class="museum-card card shadow-sm mb-3">
+            <div class="card-body">
+              <div><b>Quest kamu:</b></div>
+              <div class="small mb-2">Eksplor materi & kerjakan quiz!</div>
+              <div class="progress museum-progress mb-2" style="height:18px;"
+                role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                aria-valuenow="0" aria-live="polite">
+                <div class="progress-bar bg-warning" id="questProgress"
+                  style="width:0%">
+                  <span id="questProgressText">0/0 materi</span>
+                </div>
+              </div>
+              <button class="btn btn-warning btn-sm w-100 mt-2"
+                id="sidebarQuizBtn">Quiz Materi</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Scripts -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      defer></script>
+    <script src="assets/js/data.js" defer></script>
+    <script src="assets/js/quiz.js" defer></script>
+    <script src="assets/js/app.js" defer></script>
+    <script src="assets/js/tour-guide.js" defer></script>
+    <script src="assets/js/content-page.js" defer></script>
+  </body>
+</html>

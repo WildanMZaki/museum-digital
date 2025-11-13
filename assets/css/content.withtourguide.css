@@ -1,0 +1,169 @@
+/* /content.css */
+
+/* Gambar konten */
+.museum-image-frame {
+    position: relative;
+    max-width: 50%;
+}
+
+@media (max-width: 991.98px) {
+    .museum-image-frame {
+        max-width: 100%;
+    }
+}
+
+.museum-img {
+    width: 100%;
+    height: auto;
+    border-radius: .5rem;
+}
+
+.museum-img-overlay {
+    position: absolute;
+    bottom: .5rem;
+    left: .5rem;
+    right: .5rem;
+    background: rgba(0, 0, 0, .5);
+    color: #fff;
+    padding: .25rem .5rem;
+    border-radius: .25rem;
+    font-size: .8rem;
+}
+
+/* Card putih */
+.museum-card {
+    background: #fff;
+}
+
+/* Facts */
+.museum-facts {
+    margin: 0;
+    padding-left: 1rem;
+}
+
+.museum-facts li {
+    margin-bottom: .25rem;
+}
+
+/* ===== Tour Guide ===== */
+/* /content.css — HARD LOCK posisi viewport */
+:root {
+    --mascot-size: 64px;
+    --mascot-gap: .75rem;
+}
+
+.tour-mascot {
+    position: fixed !important;
+    right: 16px !important;
+    bottom: 16px !important;
+    z-index: 2147483647 !important;
+    /* why: kalahkan overlay lain */
+    background: transparent;
+    border: none;
+    padding: 0;
+    line-height: 0;
+}
+
+.tour-mascot img {
+    width: var(--mascot-size);
+    height: var(--mascot-size);
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .15);
+}
+
+/* Toast selalu “nempel” ke maskot */
+.tour-toast-container {
+    position: fixed !important;
+    right: calc(16px + var(--mascot-size) + var(--mascot-gap)) !important;
+    bottom: 16px !important;
+    z-index: 2147483646 !important;
+}
+
+@media (max-width: 575.98px) {
+    :root {
+        --mascot-size: 56px;
+    }
+
+    .tour-toast-container {
+        right: 16px !important;
+        bottom: calc(16px + var(--mascot-size) + var(--mascot-gap)) !important;
+    }
+}
+
+/* Dialog (opsional, tetap ada) */
+.tour-guide {
+    position: fixed;
+    z-index: 1050;
+}
+
+/* Desktop: dialog/toast di kiri maskot */
+@media (min-width: 576px) {
+    .tour-guide {
+        right: calc(1rem + var(--mascot-size) + var(--mascot-gap));
+        bottom: 1rem;
+    }
+
+    .tour-toast-container {
+        position: fixed;
+        right: calc(1rem + var(--mascot-size) + var(--mascot-gap));
+        bottom: 1rem;
+        z-index: 1060;
+    }
+}
+
+/* Mobile: dialog/toast di atas maskot */
+@media (max-width: 575.98px) {
+    :root {
+        --mascot-size: 56px;
+    }
+
+    .tour-guide {
+        right: 1rem;
+        bottom: calc(1rem + var(--mascot-size) + var(--mascot-gap));
+    }
+
+    .tour-toast-container {
+        position: fixed;
+        right: 1rem;
+        bottom: calc(1rem + var(--mascot-size) + var(--mascot-gap));
+        z-index: 1060;
+    }
+}
+
+/* Kotak dialog */
+.tour-box {
+    width: 320px;
+    max-width: 90vw;
+    background: #fff;
+    outline: none;
+}
+
+#tourMessages {
+    max-height: 220px;
+    overflow: auto;
+}
+
+.tour-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(0, 0, 0, .08);
+}
+
+.tour-msg {
+    background: #fff7d6;
+    border: 1px solid #ffe58a;
+    border-radius: .5rem;
+    padding: .5rem .75rem;
+    margin-bottom: .5rem;
+}
+
+/* Toggler saat maskot disembunyikan */
+#tourShowBtn {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 1052;
+}
