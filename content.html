@@ -9,7 +9,7 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet">
     <link href="assets/css/styles.css" rel="stylesheet">
-    <link href="content.css" rel="stylesheet">
+    <link href="assets/css/content.css" rel="stylesheet">
   </head>
   <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
@@ -24,126 +24,69 @@
     </nav>
 
     <main class="container py-3">
-      <div id="contentBox" class="row g-3">
-        <!-- Dynamic -->
+      <div class="row g-3">
+        <!-- LEFT: MAIN CONTENT -->
+        <div class="col-lg-8">
+          <div class="museum-card card shadow-sm">
+            <div class="museum-image-frame mx-auto">
+              <img id="itemImage" src alt class="museum-img card-img-top">
+              <div class="museum-img-overlay" id="itemMeta"></div>
+            </div>
+            <div class="card-body">
+              <h1 id="itemTitle" class="museum-content-title h3 mb-2">—</h1>
+              <p id="itemSummary" class="museum-content-summary mb-2">—</p>
+
+              <ul id="factsList" class="museum-facts"></ul>
+
+              <div class="museum-actions mt-4 d-flex gap-2">
+                <!-- <button class="btn btn-success btn-sm"
+                  id="shareBtn">Bagikan</button> -->
+                <a class="btn btn-outline-primary btn-sm"
+                  href="map.html">Kembali ke Peta</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: SIDEBAR -->
+        <div class="col-lg-4">
+          <!-- Quest Panel -->
+          <div id="questPanel" class="museum-card card shadow-sm mb-3">
+            <div class="card-body">
+              <div><b>Quest kamu:</b></div>
+              <div class="small mb-2">Eksplor materi & kerjakan quiz!</div>
+              <div class="progress museum-progress mb-2" style="height:18px;">
+                <div class="progress-bar bg-warning" id="questProgress"
+                  style="width:0%">
+                  <span id="questProgressText">0/0 materi</span>
+                </div>
+              </div>
+              <button class="btn btn-warning btn-sm w-100 mt-2"
+                id="sidebarQuizBtn">Quiz Materi</button>
+            </div>
+          </div>
+
+        </div>
       </div>
     </main>
 
-    <!-- TOUR GUIDE SIDEBAR -->
+    <!-- TOUR GUIDE (fixed, responsive) -->
     <div id="tourGuide" class="tour-guide d-none">
-      <div class="tour-bubble">
-        <span id="tourText">Halo, selamat datang di Museum Digital! 👋<br>
-          Saya MuseumBot – siap menemani jelajah dan quiz interaktif. </span>
+      <div class="tour-box card shadow">
+        <div
+          class="card-header py-2 d-flex align-items-center justify-content-between">
+          <strong class="small mb-0">MuseumBot</strong>
+          <button class="btn-close btn-sm" aria-label="Close"
+            id="tourCloseBtn"></button>
+        </div>
+        <div id="tourMessages" class="card-body py-2 small"></div>
       </div>
-      <button class="btn btn-sm btn-warning mt-2" id="tourQuizBtn">Quiz
-        Materi</button>
     </div>
 
+    <!-- Load scripts -->
     <script src="assets/js/data.js"></script>
+    <script src="assets/js/quiz.js"></script>
     <script src="assets/js/app.js"></script>
-    <script>
-// --------- Logika Enroll strict ---------
-(function(){
-  // Simple localStorage ticket check
-  const store = {
-    get: k => { try { return JSON.parse(localStorage.getItem(k)); }catch(e){return null;} }
-  };
-  const ticket = store.get('ticket');
-  if(!ticket || !ticket.name || !ticket.school){
-    // Jika belum enroll, redirect!
-    window.location.replace('enroll.html?redirect=content');
-    return;
-  }
-})();
-
-(function(){
-  // --- Render Konten Utama ---
-  const qs = (k)=>new URLSearchParams(location.search).get(k);
-  const type = qs('type');  // figure | kingdom | artifact
-  const id   = qs('id');
-  const pool = (window.DATA[type+'s'] || []);
-  const item = pool.find(x => x.id === id);
-
-  const box = document.getElementById('contentBox');
-  if(!item){
-    box.innerHTML = `<div class="col-12"><div class="alert alert-warning">Konten tidak ditemukan.</div></div>`;
-    return;
-  }
-  document.title = `${item.title} — Museum Digital`;
-
-  box.innerHTML = `
-    <div class="col-lg-8">
-      <div class="museum-card card shadow-sm">
-        <div class="museum-image-frame">
-          <img src="${item.image}" class="museum-img card-img-top" alt="${item.title}">
-          <div class="museum-img-overlay">${item.year || ''} • ${item.region || ''}</div>
-        </div>
-        <div class="card-body">
-          <h1 class="museum-content-title h3 mb-2">${item.title}</h1>
-          <p class="museum-content-summary mb-2">${item.summary || ''}</p>
-          <ul class="museum-facts">
-            ${(item.facts || []).map(f=>`<li>${f}</li>`).join('')}
-          </ul>
-          <div class="museum-actions mt-4 d-flex gap-2">
-            <button class="btn btn-success btn-sm" onclick="shareWA('${item.title.replace(/'/g,'’')}')">Bagikan</button>
-            <a class="btn btn-outline-primary btn-sm" href="map.html">Kembali ke Peta</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-4">
-      <div class="card museum-card shadow-sm mb-3">
-        <div class="card-body">
-          <h2 class="h5 mb-2">Akan Datang</h2>
-          <ul class="small mb-0">
-            <li>Quiz singkat 5–7 soal per materi</li>
-            <li>Audio penjelasan <span class="badge bg-info">New</span></li>
-            <li>Poin & badge quest</li>
-            <li>Referensi & sumber belajar</li>
-          </ul>
-        </div>
-      </div>
-      <div id="questPanel" class="museum-card card shadow-sm mb-3">
-        <div class="card-body">
-          <div><b>Quest kamu:</b></div>
-          <div class="small mb-2">Eksplor materi & kerjakan quiz untuk mengumpulkan badge!</div>
-          <!-- Dummy quest progress-->
-          <div class="progress museum-progress mb-2" style="height:15px;">
-            <div class="progress-bar bg-warning" style="width:27%" id="questProgress">3/11 materi</div>
-          </div>
-          <div class="museum-badge-block small">
-            Badges: <span class="museum-badge museum-badge-aktif">Wali Songo</span>
-            <span class="museum-badge">Kerajaan</span>
-            <span class="museum-badge">Artefak</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-
-  // Tour guide sidebar (kanan bawah)
-  setTimeout(()=>{
-    document.getElementById('tourGuide').classList.remove('d-none');
-    // Sapaan random / info quest
-    document.getElementById('tourText').textContent = [
-      "Halo, selamat menjelajah! Kapan pun siap quiz, klik saja Quiz Materi. 🎉",
-      "Sudah jelajahi 3 materi. Mau lanjut quiz untuk badge berikutnya?",
-      "Cek info materi, challenge quest akan muncul setelah quiz selesai!",
-      "Siap belajar? Klik Quiz Materi di bawah, saya bantu kok 😉",
-    ][Math.floor(Math.random()*4)];
-  },600);
-
-  document.getElementById('tourQuizBtn').addEventListener('click', function(){
-    alert("Quiz akan datang di versi selanjutnya! 😊");
-    // nanti launch quiz panel/material quiz di sini
-  });
-
-})();
-function shareWA(txt){
-  const url = window.location.href;
-  const msg = encodeURIComponent(`Lihat materi "${txt}" di Museum Digital:\n${url}`);
-  window.open(`https://wa.me/?text=${msg}`,'_blank');
-}
-</script>
+    <script src="assets/js/content-page.js"></script>
   </body>
 </html>
