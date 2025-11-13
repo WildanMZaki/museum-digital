@@ -1,0 +1,49 @@
+/* /assets/css/report.css */
+.report-card {
+    max-width: 920px;
+    background: #fff;
+}
+
+.report-logo {
+    width: 64px;
+    height: auto;
+    object-fit: contain;
+}
+
+.stat .stat-label {
+    font-size: .8rem;
+    color: #6c757d;
+    margin-bottom: .25rem;
+}
+
+.stat .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.stat .stat-sub {
+    font-size: .8rem;
+    color: #6c757d;
+}
+
+/* Buttons right-aligned */
+.actions-right {
+    justify-content: flex-end;
+}
+
+@media print {
+
+    .navbar,
+    .actions-right,
+    .bg-body-tertiary {
+        display: none !important;
+    }
+
+    body {
+        background: #fff !important;
+    }
+
+    .report-card {
+        box-shadow: none !important;
+    }
+}

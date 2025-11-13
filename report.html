@@ -1,0 +1,128 @@
+<!-- /report.html -->
+<!doctype html>
+<html lang="id">
+    <head>
+        <meta charset="utf-8" />
+        <title>Rekap Kunjungan — Museum Digital</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- Bootstrap -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet" />
+        <!-- App styles (opsional) -->
+        <link href="assets/css/styles.css" rel="stylesheet" />
+        <!-- Report styles -->
+        <link href="assets/css/report.css" rel="stylesheet" />
+    </head>
+    <body class="bg-body-tertiary">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="map.html">Museum Digital</a>
+                <div class="ms-auto">
+                    <a class="btn btn-outline-primary btn-sm me-2"
+                        href="map.html">Peta</a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="container py-4">
+            <!-- Area yang akan di-screenshot -->
+            <section id="reportCard" class="report-card card shadow-sm mx-auto">
+                <div class="card-body">
+                    <div
+                        class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h1 class="h4 mb-1">Rekap Kunjungan Siswa</h1>
+                            <div id="studentMeta"
+                                class="text-muted small">—</div>
+                        </div>
+                        <img id="reportLogo" src="assets/img/tourguide.png"
+                            alt="Logo" class="report-logo" />
+                    </div>
+
+                    <hr />
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-12 col-md-4">
+                            <div class="stat card">
+                                <div class="card-body">
+                                    <div class="stat-label">Materi
+                                        Dieksplor</div>
+                                    <div class="stat-value"
+                                        id="statExplored">0</div>
+                                    <div class="stat-sub"
+                                        id="statExploredSub">dari 0 materi</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="stat card">
+                                <div class="card-body">
+                                    <div class="stat-label">Quiz
+                                        Diselesaikan</div>
+                                    <div class="stat-value"
+                                        id="statQuizDone">0</div>
+                                    <div class="stat-sub"
+                                        id="statQuizDoneSub">materi</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="stat card">
+                                <div class="card-body">
+                                    <div class="stat-label">Akurasi
+                                        Jawaban</div>
+                                    <div class="stat-value"
+                                        id="statAccuracy">0%</div>
+                                    <div class="stat-sub" id="statAccuracySub">0
+                                        benar / 0 jawaban</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 class="h6">Daftar Materi Dieksplor</h2>
+                    <div id="exploredList" class="table-responsive mb-3">
+                        <table class="table table-sm align-middle">
+                            <thead>
+                                <tr><th
+                                        style="width:56px">#</th><th>Judul</th><th>Tipe</th></tr>
+                            </thead>
+                            <tbody id="exploredTbody"></tbody>
+                        </table>
+                    </div>
+
+                    <h2 class="h6">Hasil Quiz per Materi</h2>
+                    <div id="quizList" class="table-responsive">
+                        <table class="table table-sm align-middle">
+                            <thead>
+                                <tr><th
+                                        style="width:56px">#</th><th>Materi</th><th>Soal</th><th>Benar</th><th>Skor</th></tr>
+                            </thead>
+                            <tbody id="quizTbody"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="small text-muted mt-3">
+                        * Gunakan tombol di kanan untuk menyimpan atau
+                        membagikan rekap ini.
+                    </div>
+                </div>
+            </section>
+
+            <div class="mt-3 d-flex gap-2 actions-right">
+                <button id="btnShare"
+                    class="btn btn-outline-primary btn-sm">Share</button>
+                <button id="btnDownload" class="btn btn-primary btn-sm">Download
+                    Gambar</button>
+            </div>
+        </main>
+
+        <!-- Data & deps -->
+        <script src="assets/js/data.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+        <!-- Report logic -->
+        <script src="assets/js/report.js"></script>
+    </body>
+</html>
