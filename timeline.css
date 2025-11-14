@@ -1,35 +1,64 @@
+/* ============= WARNA & FONTS (dari map.html) ============= */
 body {
-    background: #f9f5eb;
-    font-family: 'Montserrat', 'Roboto', sans-serif;
+    background: #f6edd9;
+    font-family: 'Poppins', sans-serif;
+    color: #5c3b1e;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Playfair Display', serif;
+    color: #5c3b1e;
 }
 
 .timeline-title {
     font-size: 2.1rem;
     letter-spacing: 1px;
-    color: #786442;
+    /* Warna disamakan */
+    color: #5c3b1e;
     text-shadow: 0 1px 0 #e5dcc1;
 }
 
 .timeline-desc {
-    color: #544014;
+    color: #6b451b;
+    /* Warna disamakan */
 }
 
+/* ============= BUTTON FILTER (dari .island-btn map.html) ============= */
 .timeline-filter {
     margin-bottom: 22px;
 }
 
 .filter-btn {
-    margin-right: 10px;
-    min-width: 120px;
+    margin: 0 9px 9px 0;
+    background: #ffedc2;
+    border: 1px solid #c6a567;
+    color: #79511e;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
+.filter-btn:hover {
+    background: #f1d7a5;
+    transform: translateY(-2px);
+}
+
+.filter-btn:active,
 .filter-btn.active {
-    background: #e6deab;
-    border-color: #d1b375;
-    color: #785924;
-    font-weight: bold;
+    background: #c9a46a;
+    color: #fff7ec;
+    box-shadow: 0 3px 8px rgba(129, 82, 26, 0.3);
 }
 
+
+/* ============= TIMELINE ============= */
 .timeline {
     position: relative;
     margin: 0 auto;
@@ -77,10 +106,12 @@ body {
     box-shadow: 0 5px 14px #e7c28244, 0 1px 2px #aa9f8e22;
 }
 
+/* ============= CARD (style dari .card map.html) ============= */
 .timeline-card {
-    background: #faf1e3;
+    background: #fbf8f1;
     border-radius: 12px;
-    box-shadow: 0 4px 16px #e5dcc1;
+    box-shadow: 0 2px 12px rgba(175, 136, 80, 0.15);
+    border: 1px solid #e7d3b0;
     padding: 20px 25px 17px 25px;
     margin-bottom: 8px;
     color: #603e12;
@@ -112,39 +143,45 @@ body {
     margin-bottom: 6px;
     font-size: 1.18rem;
     font-weight: bold;
-    color: #856329;
+    color: #6b451b;
+    /* Warna disamakan */
 }
 
 .timeline-card .timeline-summary {
     margin-bottom: 7px;
     font-size: 0.98rem;
-    color: #6a5b34;
+    color: #5c3b1e;
+    /* Warna disamakan */
 }
 
 .timeline-card .timeline-facts {
     font-size: 0.94rem;
-    color: #855f1e;
+    color: #79511e;
+    /* Warna disamakan */
     margin-bottom: 3px;
     list-style: disc inside;
     padding-left: 0;
 }
 
 .timeline-goto {
-    color: #66755a !important;
+    color: #fffaf2 !important;
+    /* Warna disamakan */
     margin-top: 7px;
     border-radius: 5px;
     font-size: 0.93em;
-    background: #ede6c7;
+    background: #a06b45;
+    /* Warna disamakan */
     border: none;
     padding: 7px 12px;
     cursor: pointer;
     transition: background 0.15s;
+    font-weight: 600;
 }
 
 .timeline-goto:hover {
-    background: #d1b375;
-    color: #45390c !important;
-    border-color: #e6deab;
+    background: #8b5e3c;
+    /* Warna disamakan */
+    color: #fffaf2 !important;
 }
 
 @media (max-width: 600px) {

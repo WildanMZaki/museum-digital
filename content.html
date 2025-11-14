@@ -13,15 +13,54 @@
     <link href="assets/css/content.css" rel="stylesheet">
     <!-- NEW: TourGuide Toast styles -->
     <link href="assets/css/tour-guide.css" rel="stylesheet">
+
+    <!-- INLINE NAVBAR STYLES (gabung di sini) -->
+    <style>
+      /* Navbar tema Museum Digital */
+      .navbar-museum {
+        background: rgba(233, 213, 192, 0.9);
+        border-bottom: 1px solid #e7d3b0;
+        backdrop-filter: blur(10px);
+      }
+      .navbar-museum .navbar-brand {
+        font-family: 'Playfair Display', serif;
+        color: #79511e !important;
+        font-weight: 700;
+      }
+      .btn-nav-primary {
+        background: #c9a46a;
+        border: none;
+      }
+      .btn-nav-primary:hover, .btn-nav-primary:focus {
+        background: #b78e53;
+      }
+      .btn-nav-outline {
+        color: #79511e;
+        border-color: #c9a46a;
+        background: transparent;
+      }
+      .btn-nav-outline:hover, .btn-nav-outline:focus {
+        color: #fff;
+        background: #c9a46a;
+        border-color: #c9a46a;
+      }
+      .btn-nav-primary:hover,
+      .btn-nav-primary:focus {
+        background: #b78e53;
+      }
+    </style>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
+    <nav class="navbar navbar-expand-lg shadow-sm navbar-museum">
       <div class="container">
-        <a class="navbar-brand" href="map.html">Museum Digital</a>
+        <a class="navbar-brand fw-bold"
+          style="font-family:'Playfair Display',serif; color:#79511e;"
+          href="#">🕌 Museum Digital</a>
         <div class="ms-auto">
-          <a class="btn btn-outline-primary btn-sm me-2"
+          <a class="btn btn-outline-primary btn-sm me-2 btn-nav-outline"
             href="map.html">Peta</a>
-          <a class="btn btn-primary btn-sm" href="report.html">Lihat Rekap</a>
+          <a class="btn btn-primary btn-sm btn-nav-primary"
+            href="report.html">Lihat Rekap</a>
         </div>
       </div>
     </nav>

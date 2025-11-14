@@ -351,7 +351,7 @@
           window.QuestTracker?.updateQuestProgress?.();
         } catch {}
         window.TourGuide?.toast?.(
-          "Quiz selesai! Cek ringkasan jawaban di panel kanan. 🎯",
+          "Quiz selesai! Lihat kembali ringkasan jawaban anda. 🎯",
           { delay: 3000 }
         );
         renderQuizReview(itemId, { scrollIntoView: true, showHeader: true });

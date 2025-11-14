@@ -48,7 +48,7 @@
           <div class="text-muted small mb-2">~ ${item.year || "—"}</div>
           <p class="small mb-2">${item.summary || ""}</p>
           <div class="d-grid gap-2">
-            <a class="btn btn-sm btn-primary" href="${url}">Lihat Detail</a>
+            <a class="btn btn-sm btn-primary text-white" href="${url}">Lihat Detail</a>
             <a class="btn btn-sm btn-outline-secondary" href="${timeTravelUrl}">Time Machine</a>
           </div>
         </div>
@@ -109,7 +109,7 @@
   const overlays = {
     "Wali Songo": layerFigures,
     Kingdoms: layerKingdoms,
-    Artifacts: layerArts,
+    // Artifacts: layerArts,
   };
   L.control.layers(null, overlays, { collapsed: false }).addTo(map);
 

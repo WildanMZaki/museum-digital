@@ -8,10 +8,23 @@ function getQueryParam(param, defaultValue) {
 
 // Konfigurasi dari URL atau default
 const YEARS_AGO = parseInt(getQueryParam("yearsAgo", "65"), 10);
-const TARGET = getQueryParam("target", "materi.html");
-console.log(TARGET);
+const TARGET_RAW = getQueryParam("target", "materi.html");
 
-const ANIMATION_DURATION = 7000;
+// Rakit ulang URL redirect: gabungkan target + sisa params (mis. type, id)
+function buildRedirectUrl() {
+  const params = new URLSearchParams(window.location.search);
+  // Ambil target dan buang param kontrol
+  const target = params.get("target") || TARGET_RAW || "materi.html";
+  params.delete("yearsAgo");
+  params.delete("target");
+  // Sisakan semua param lain (type, id, dll)
+  const rest = params.toString();
+  if (!rest) return target;
+  return target + (target.includes("?") ? "&" : "?") + rest;
+}
+
+const TARGET = buildRedirectUrl();
+const ANIMATION_DURATION = 8000;
 
 // Helper format
 function pad(num) {
@@ -49,15 +62,12 @@ let endTime = new Date(
   now.getSeconds()
 ).getTime();
 
-let frame = 0;
-let lastTime = startTime;
-
 // Menggunakan easing untuk animasi speed up
 function easeInQuint(t) {
   return t * t * t * t * t;
 }
 
-function runTimeTravelAnim(frames) {
+function runTimeTravelAnim() {
   const start = startTime;
   const end = endTime;
   const duration = ANIMATION_DURATION;
@@ -65,30 +75,26 @@ function runTimeTravelAnim(frames) {
 
   function animate(ts) {
     if (!startAnim) startAnim = ts;
-    let elapsed = ts - startAnim;
-    let progress = Math.min(elapsed / duration, 1);
-
-    // Easing: dari lambat ke cepat
-    let eased = easeInQuint(progress);
-    let currentTime = start - (start - end) * eased;
+    const elapsed = ts - startAnim;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = easeInQuint(progress);
+    const currentTime = start - (start - end) * eased;
 
     const dt = new Date(currentTime);
     dateEl.innerText = formatDate(dt);
     timeEl.innerText = formatTime(dt);
 
-    // Optional: makin cepat, bisa trigger spark, background, dsb
-
     if (progress < 1) {
       requestAnimationFrame(animate);
     } else {
-      // Redirect setelah animasi selesai
+      // Redirect setelah animasi selesai (URL sudah lengkap)
       window.location.href = TARGET;
     }
   }
   requestAnimationFrame(animate);
 }
 
-// Trigger animasi setelah 0.8 detik
+// Trigger animasi setelah 1.5 detik
 setTimeout(() => {
-  runTimeTravelAnim(60);
+  runTimeTravelAnim();
 }, 1500);

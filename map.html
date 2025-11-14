@@ -143,6 +143,14 @@
       font-size: 14px;
       border: 1px solid #e7d3b0;
     }
+
+    .gambar-pulau {
+      max-width: 24px;
+      max-height: 24px;
+      vertical-align: middle;
+      margin-right: 8px;
+      border-radius: 4px;
+    }
     </style>
   </head>
 
@@ -168,8 +176,8 @@
         <!-- MAP -->
         <div class="col-lg-8">
           <div id="map" class="shadow-sm"></div>
-          <div class="mt-2 small text-muted">Gunakan kontrol layer di pojok
-            kanan atas untuk on/off kategori.</div>
+          <div class="mt-2 small text-muted">Ceklis bagian yang ingin
+            ditampilkan di peta melalui kontrol di kanan atas</div>
         </div>
 
         <!-- SIDEBAR -->
@@ -180,23 +188,31 @@
               style="background: rgba(254, 231, 206, 0.9)">
               <h2 class="h5 mb-2">Pilih Pulau</h2>
               <div id="minimap" class="mb-2">
-                <button data-island="sumatra" class="island-btn"><svg width="30"
-                    height="18"><ellipse cx="15" cy="9" rx="14" ry="7"
-                      fill="#dbbe91" /></svg> Sumatra</button>
-                <button data-island="jawa" class="island-btn"><svg width="32"
-                    height="16"><rect x="3" y="5" width="25" height="7" rx="6"
-                      fill="#dbbe91" /></svg> Jawa</button>
-                <button data-island="kalimantan" class="island-btn"><svg
-                    width="26" height="20"><ellipse cx="13" cy="10" rx="11"
-                      ry="8" fill="#dbbe91" /></svg> Kalimantan</button>
-                <button data-island="sulawesi" class="island-btn"><svg
-                    width="22" height="20"><ellipse cx="11" cy="10" rx="10"
-                      ry="6" fill="#dbbe91" /><rect x="5" y="3" width="7"
-                      height="7" rx="3" fill="#d1b375" /></svg>
-                  Sulawesi</button>
-                <button data-island="papua" class="island-btn"><svg width="27"
-                    height="15"><ellipse cx="13" cy="8" rx="10" ry="6"
-                      fill="#dbbe91" /></svg> Papua</button>
+                <button data-island="sumatra" class="island-btn">
+                  <img src="./assets/img/pulau/sumatra.webp" alt="Sumatra"
+                    class="img-fluid gambar-pulau">
+                  Sumatra
+                </button>
+                <button data-island="jawa" class="island-btn">
+                  <img src="./assets/img/pulau/jawa.webp" alt="Jawa"
+                    class="img-fluid gambar-pulau">
+                  Jawa
+                </button>
+                <button data-island="kalimantan" class="island-btn">
+                  <img src="./assets/img/pulau/kalimantan.webp" alt="Kalimantan"
+                    class="img-fluid gambar-pulau">
+                  Kalimantan
+                </button>
+                <button data-island="sulawesi" class="island-btn">
+                  <img src="./assets/img/pulau/sulawesi.webp" alt="Sulawesi"
+                    class="img-fluid gambar-pulau">
+                  Sulawesi
+                </button>
+                <button data-island="papua" class="island-btn">
+                  <img src="./assets/img/pulau/papua.webp" alt="Papua"
+                    class="img-fluid gambar-pulau">
+                  Papua
+                </button>
               </div>
               <small>Pilih pulau utama untuk fokus area peta.</small>
             </div>
@@ -211,7 +227,7 @@
                 class="form-select custom-dropdown mb-3">
                 <option value="figures">🕌 Wali Songo</option>
                 <option value="kingdoms">🏰 Kerajaan Islam</option>
-                <option value="artifacts">⚱️ Artefak Islam</option>
+                <!-- <option value="artifacts">⚱️ Artefak Islam</option> -->
               </select>
 
               <div id="topikDesc" class="topik-info">
@@ -259,7 +275,7 @@
     const topikDescList = {
       figures: "Sebaran pusat dakwah dan jejak Wali Songo di pesisir Jawa.",
       kingdoms: "Kerajaan, Kesultanan, dan penyebaran Islam di Nusantara.",
-      artifacts: "Artefak, peninggalan, dan benda bersejarah era Islam."
+      // artifacts: "Artefak, peninggalan, dan benda bersejarah era Islam."
     };
 
     document.getElementById('topicSelector').addEventListener('change', function() {

@@ -5,7 +5,7 @@ window.QUIZ_DATA = {
     {
       question: "Sunan Kalijaga terkenal dengan metode dakwah melalui apa?",
       options: [
-        "Wayang dan adad gamelan",
+        "Wayang dan gamelan",
         "Perdagangan",
         "Peperangan",
         "Tulisan Arab",
@@ -32,6 +32,63 @@ window.QUIZ_DATA = {
       question: "Di mana lokasi makam Sunan Kalijaga?",
       options: ["Kudus", "Tuban", "Demak", "Cirebon"],
       correct: 2,
+    },
+  ],
+
+  sunangresik: [
+    {
+      question:
+        "Pada tanggal dan tahun berapa Sunan Gresik wafat dan di mana beliau dimakamkan?",
+      options: [
+        "15 Mei 1501 M, dimakamkan di Ampel",
+        "8 April 1419 M, dimakamkan di Gapura, Gresik",
+        "3 Maret 1400 M, dimakamkan di Tuban",
+        "12 Juni 1390 M, dimakamkan di Kudus",
+      ],
+      correct: 1,
+    },
+    {
+      question:
+        "Peranan apa yang dijalankan Sunan Gresik sebagai ahli tata negara?",
+      options: [
+        "Menjadi bendahara Pajajaran",
+        "Menjadi pejabat VOC",
+        "Menjadi penasihat raja, pembimbing pangeran, dan tokoh dermawan",
+        "Menjadi panglima perang Majapahit",
+      ],
+      correct: 2,
+    },
+    {
+      question: "Mengapa Sunan Gresik dijuluki Ayah dari Walisongo?",
+      options: [
+        "Karena ia guru tunggal seluruh wali",
+        "Karena ia penyiar Islam pertama di Jawa dan generasi awal Walisongo",
+        "Karena ia pemimpin Samudra Pasai",
+        "Karena ia pendiri Kesultanan Demak",
+      ],
+      correct: 1,
+    },
+    {
+      question:
+        "Sebutkan garis keturunan Sunan Gresik hingga Nabi Muhammad SAW?",
+      options: [
+        "Keturunan dari Raja Majapahit",
+        "Keturunan Dinasti Abbasiyah",
+        "Keturunan ke-22 dari Nabi melalui Fatimah dan Ali",
+        "Keturunan dari Kerajaan Champa",
+      ],
+      correct: 2,
+    },
+    {
+      question:
+        "Apa hubungan Sunan Gresik dengan Sunan Ampel, Sunan Bonang, dan Sunan Drajat?",
+      options: [
+        "Ayah Sunan Ampel dan kakek Sunan Bonang serta Drajat",
+        "Saudara Sunan Bonang",
+        "Paman Sunan Drajat",
+        "Sepupu Sunan Giri",
+      ],
+      correct: 0,
     },
   ],
 
